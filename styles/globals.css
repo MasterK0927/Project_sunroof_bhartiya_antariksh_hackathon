@@ -146,3 +146,107 @@ a {
   background-color: #d9534f;
   opacity: 0.8;
 }
+
+.controls {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.controls h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: 25px;
+  margin-top: 20px;
+}
+
+.section-description {
+  font-size: 12px;
+  color: lightgray;
+  margin: 0 0 15px 0;
+}
+
+.deleted_panels_outer_container {
+  margin-top: 20px;
+}
+
+.deleted_panels_description {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.deleted_panels_inner_container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.deleted_panels_button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.deleted_panels_button:hover {
+  background-color: #e0e0e0;
+}
+
+.roof_panel_info_box {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.summary {
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
+.energy-input-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.combobox-input {
+  width: 25%;
+  min-width: 50px;
+  margin-right: 10px;
+  border-radius: 2px;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.nav-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.nav-button:hover {
+  background-color: #0056b3;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+

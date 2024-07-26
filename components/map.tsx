@@ -13,6 +13,8 @@ import {
 import Places from "./places";
 import { unmountComponentAtNode } from "react-dom";
 import React from "react";
+import { useRouter } from 'next/router';
+
 // import Distance from "./distance";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
@@ -375,6 +377,11 @@ export default function Map() {
         return area;
     }
 
+    const router = useRouter();
+    const handleNavigation = (path: string) => {
+        router.push(path);
+    };
+
 
     return (
         <div className="container">
@@ -388,63 +395,52 @@ export default function Map() {
                     }}
                 />
                 <hr />
-                <h1 style={{ 'fontSize': '25px', }}>Drawn Panels</h1>
-                <p style={{ 'fontSize': '12px', 'color': 'lightgray', 'margin': "0  0 15px 0" }}>Draw polygons over all south, east and west facing sections of your roof.</p>
-                {deletedPanels.length > 0 && <div className="deleted_panels_outer_container">
-                    <p className="deleted_panels_description">Click to add panel back:</p>
-                    <div className="deleted_panels_inner_container">
-                        {deletedPanels && deletedPanels.map((panelIndex) => {
-                            return <button key={panelIndex} className="deleted_panels_button" onClick={(e) => {
-                                roofPanels[panelIndex].addBack();
-                            }}>{panelIndex + 1}</button>
-                        })}
-                    </div>
-                </div>}
-                {deletedPanels && roofPanels.length > 0 && roofPanels.map((panel, index) => {
-                    if (!panel.isDeleted) {
-                        let area = panel.area;
-                        return (
-                            <div className="roof_panel_info_box">
-                                <h1>Panel {index + 1}</h1>
-                                <p>Area: <span className="bold">{area.toFixed(2)} ft²</span></p>
-                                {panel.points.length === 3 && <p>Panels: <span className="bold">{panel.solarPanels.length} solar panels</span></p>}
+                <h1 className="section-title">Drawn Panels</h1>
+                <p className="section-description">Draw polygons over all south, east and west facing sections of your roof.</p>
+                {deletedPanels.length > 0 && (
+                    <div className="deleted_panels_outer_container">
+                        <p className="deleted_panels_description">Click to add panel back:</p>
+                        <div className="deleted_panels_inner_container">
+                            {deletedPanels.map((panelIndex) => (
                                 <button
-                                    className="delete_button"
-                                    onClick={(e) => {
-                                        panel.delete();
-                                    }}
+                                    key={panelIndex}
+                                    className="deleted_panels_button"
+                                    onClick={() => roofPanels[panelIndex].addBack()}
                                 >
-                                    Delete
+                                    {panelIndex + 1}
                                 </button>
-                            </div>
-                        );
-                    } else {
-                        return (<></>);
-                    }
-                })}
+                            ))}
+                        </div>
+                    </div>
+                )}
+                {deletedPanels && roofPanels.length > 0 && roofPanels.map((panel, index) => (
+                    !panel.isDeleted && (
+                        <div key={index} className="roof_panel_info_box">
+                            <h1>Panel {index + 1}</h1>
+                            <p>Area: <span className="bold">{panel.area.toFixed(2)} ft²</span></p>
+                            {panel.points.length === 3 && (
+                                <p>Panels: <span className="bold">{panel.solarPanels.length} solar panels</span></p>
+                            )}
+                            <button
+                                className="delete_button"
+                                onClick={() => panel.delete()}
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    )
+                ))}
                 <div className="summary">
                     <hr />
                     <h1>Summary</h1>
                     <p>Total Area: <span className="bold">{getRoofArea().toFixed(2)} ft² </span></p>
-                    <p style={{ 'fontSize': '12px', 'color': 'lightgray' }}>Ender your home's average monthly energy consumption below:</p>
-                    <div style={{
-                        'width': '100%',
-                        'display': 'flex'
-                    }}>
+                    <p className="section-description">Enter your home's average monthly energy consumption below:</p>
+                    <div className="energy-input-container">
                         <input
                             value={energyConsumption}
-                            onChange={(e) => {
-                                setEnergyConsumption(Number(e.target.value))
-                            }}
+                            onChange={(e) => setEnergyConsumption(Number(e.target.value))}
                             className="combobox-input"
                             placeholder="Energy consumption"
-                            style={{
-                                'width': '25%',
-                                'minWidth': '50px',
-                                'margin': '5px 10px 5px 0',
-                                'borderRadius': '2px',
-                                'textAlign': 'center'
-                            }}
                         />
                         <p>kWh per month</p>
                     </div>
@@ -455,7 +451,13 @@ export default function Map() {
                         per month.
                     </p>
                 </div>
+                <div className="navigation-buttons">
+                    <button onClick={() => handleNavigation('/about')} className="nav-button">About</button>
+                    <button onClick={() => handleNavigation('/demo')} className="nav-button">Demo</button>
+                </div>
             </div>
+            );
+
             <div className="map">
                 {panelHovering !== undefined && <div className="hovering_over_message">Currently hovering over: <span style={{ 'fontSize': '25px' }}>Panel {panelHovering + 1}</span></div>}
                 <GoogleMap
